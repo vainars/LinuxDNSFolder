@@ -54,22 +54,19 @@ write_files:
       ;
       ; The full zone file
       ;
-      $TTL 3D
-      @       IN      SOA     ns.ainars.zone. root.ainars.zoo. (
-                    3       ; serial
-                    8H              ; refresh, seconds
-                    2H              ; retry, seconds
-                    4W              ; expire, seconds
-                    1D )            ; minimum, seconds
+      $TTL    604800
+      @       IN      SOA     ainars.zone. root.ainars.zone. (
+                  3     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
       ;
-      ;Name Server
-      ns                  IN      A       192.168.100.10
-      ns.ainars.zone.    IN      A       192.168.100.10 
-      @                       IN      NS      ns
-      ainars.zone.             IN      NS      ns
-      ;Mail Server
-      mail                    IN      A       192.168.100.10
-      @                       IN      MX      10 mail
+      ; name servers - NS records
+      IN      NS      ns1.ainars.zone.
+
+      ; name servers - A records
+      ns1.ainars.zone.          IN      A       10.128.10.11
   - path: /etc/bind/named.conf.local
     content: |
       zone "ainars.zone" {
