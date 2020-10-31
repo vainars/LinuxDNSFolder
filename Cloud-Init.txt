@@ -10,9 +10,7 @@ package_upgrade: true
 packages:
   - bind9
 write_files:
-  - owner: root:root
     path: /etc/default/bind9
-    permissions: '0755'
   - content: |
       #
       # run resolvconf?
