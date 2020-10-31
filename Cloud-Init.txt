@@ -13,12 +13,12 @@ write_files:
   - owner: root:root
     path: /etc/default/bind9
   - content: |
-    #
-    # run resolvconf?
-    RESOLVCONF=no
+      #
+      # run resolvconf?
+      RESOLVCONF=no
 
-    # startup options for the server
-    OPTIONS="-u bind -4"
+      # startup options for the server
+      OPTIONS="-u bind -4"
 runcmd:
   - mkdir /etc/ainarsTest
   - systemctl restart bind9
