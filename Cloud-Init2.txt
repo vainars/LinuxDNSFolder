@@ -6,69 +6,67 @@ runcmd:
   - "mkdir /etc/ainarsTest"
   - "systemctl restart bind9"
 write_files: 
-  - 
+  - path: /etc/default/bind9
     content: |
-        #
-        # run resolvconf?
-        RESOLVCONF=no
-        
-        # startup options for the server
-        OPTIONS="-u bind -4"
-    path: /etc/default/bind9
+      #
+      # run resolvconf?
+      RESOLVCONF=no
+    
+      # startup options for the server
+      OPTIONS="-u bind -4"
+  - path: /etc/bind/named.conf.options
     content: |
-        options {
-        directory "/var/cache/bind";
+      options {
+      directory "/var/cache/bind";
 
-        // If there is a firewall between you and nameservers you want
-        // to talk to, you may need to fix the firewall to allow multiple
-        // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+      // If there is a firewall between you and nameservers you want
+      // to talk to, you may need to fix the firewall to allow multiple
+      // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
 
-        // If your ISP provided one or more IP addresses for stable
-        // nameservers, you probably want to use them as forwarders.
-        // Uncomment the following block, and insert the addresses replacing
-        // the all-0's placeholder.
+      // If your ISP provided one or more IP addresses for stable
+      // nameservers, you probably want to use them as forwarders.
+      // Uncomment the following block, and insert the addresses replacing
+      // the all-0's placeholder.
 
-        // forwarders {
-        //      0.0.0.0;
-        // };
+      // forwarders {
+      //      0.0.0.0;
+      // };
 
-        //========================================================================
-        // If BIND logs error messages about the root key being expired,
-        // you will need to update your keys.  See https://www.isc.org/bind-keys
-        //========================================================================
-        dnssec-validation auto;
+      //========================================================================
+      // If BIND logs error messages about the root key being expired,
+      // you will need to update your keys.  See https://www.isc.org/bind-keys
+      //========================================================================
+      dnssec-validation auto;
 
-        auth-nxdomain no;    # conform to RFC1035
-        listen-on-v6 { any; };
-        recursion yes;                 # enables resursive queries
+      auth-nxdomain no;    # conform to RFC1035
+      listen-on-v6 { any; };
+      recursion yes;                 # enables resursive queries
 
-        forwarders {
-                8.8.8.8;
-                8.8.4.4;
-        };
-        };
-    path: /etc/bind/named.conf.options
+      forwarders {
+            8.8.8.8;
+            8.8.4.4;
+      };
+      };
+  - path: /etc/bind/zones/ainars.zone.db
     content: |
       ;
-        ; Zone file for ainars.zone
-        ;
-        ; The full zone file
-        ;
-        $TTL 3D
-        @       IN      SOA     ns.ainars.zone. root.ainars.zoo. (
-                        3       ; serial
-                        8H              ; refresh, seconds
-                        2H              ; retry, seconds
-                        4W              ; expire, seconds
-                        1D )            ; minimum, seconds
-        ;
-        ;Name Server
-        ns                  IN      A       192.168.100.10
-        ns.ainars.zone.    IN      A       192.168.100.10 
-        @                       IN      NS      ns
-        ainars.zone.             IN      NS      ns
-
-       ;Mail Server
-       mail                    IN      A       192.168.100.10
-       @                       IN      MX      10 mail
-    path: /etc/bind/zones/ainars.zone.db
+      ; Zone file for ainars.zone
+      ;
+      ; The full zone file
+      ;
+      $TTL 3D
+      @       IN      SOA     ns.ainars.zone. root.ainars.zoo. (
+                    3       ; serial
+                    8H              ; refresh, seconds
+                    2H              ; retry, seconds
+                    4W              ; expire, seconds
+                    1D )            ; minimum, seconds
+      ;
+      ;Name Server
+      ns                  IN      A       192.168.100.10
+      ns.ainars.zone.    IN      A       192.168.100.10 
+      @                       IN      NS      ns
+      ainars.zone.             IN      NS      ns
+      ;Mail Server
+      mail                    IN      A       192.168.100.10
+      @                       IN      MX      10 mail
