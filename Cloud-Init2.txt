@@ -70,3 +70,10 @@ write_files:
       ;Mail Server
       mail                    IN      A       192.168.100.10
       @                       IN      MX      10 mail
+  - path: /etc/bind/named.conf.local
+    content: |
+      zone "ainars.zone" {
+      type master;
+      file "/etc/bind/zones/ainars.zone.db"; # zone file path
+      notify no;
+      };
