@@ -2,9 +2,6 @@
 package_upgrade: true
 packages: 
   - bind9
-runcmd: 
-  - "mkdir /etc/ainarsTest"
-  - "systemctl restart bind9"
 write_files: 
   - 
     content: |
@@ -15,3 +12,6 @@ write_files:
         # startup options for the server
         OPTIONS="-u bind -4"
     path: /etc/default/bind9
+runcmd: 
+  - "mkdir /etc/ainarsTest"
+  - "systemctl restart bind9"
