@@ -3,7 +3,6 @@ package_upgrade: true
 packages: 
   - bind9
 runcmd: 
-  - "mkdir /etc/ainarsTest"
   - "systemctl restart bind9"
 write_files: 
   - path: /etc/default/bind9
