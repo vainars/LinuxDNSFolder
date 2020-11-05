@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-18.04'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'newDNS-conn'
+    subscriptionId: '4d87056b-7754-4b7f-b715-d3768349ef58'
+    action: Create Or Update Resource Group
+    resourceGroupName: 'Ainars'
+    location: "westeurope"
+    templateLocation: 'Linked artifact'
+    csmFile: 'CreateDNSSrv/template.json'
+    overrideParameters: '-projectName lnxDNSHW -linkedTemplateUri https://raw.githubusercontent.com/vainars/LNXGitRepoPipe/main/CreateDNSSrv/template.json'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployLNXPiplineTemplate'
